@@ -42,6 +42,13 @@ check compares `Origin` with `Host`, so a separate origin would break sign-in. T
    to the static files (with a fallback to `index.html` for client-side routes). **Preserve the Host header**
    (nginx: `proxy_set_header Host $host;`).
 
+### Docker
+
+The `Dockerfile` builds the app and serves it with [Caddy](https://caddyserver.com/), which also proxies `/api`, `/auth`,
+`/console` and `/v1` to the backend and handles HTTPS and the security headers (see `Caddyfile`). It is used by the
+backend repo's full-stack `compose.yaml`; you do **not** need it if the backend serves this build itself
+(`WEB_DIST`). See the backend's `DEPLOY.md`.
+
 ## Structure
 
 ```
@@ -59,6 +66,8 @@ public/theme-init.js  sets dark mode before first paint (a file, because the bac
 
 - There are **no automated frontend tests** yet. It was checked by driving a real browser through setup, sign-in, the
   forced password change, role restrictions and the mobile layout.
+- Pages use the **full width** of the content area (no `max-w-*` container). Keep it that way: cap individual form
+  fields, cards or dialogs if needed, never the page.
 - Dark mode is a `dark` class on `<html>`, remembered in `localStorage`.
 - The UI is best-effort and says so: GST data is not authoritative for tax or compliance decisions.
 

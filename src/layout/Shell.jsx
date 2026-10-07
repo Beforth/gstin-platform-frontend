@@ -59,7 +59,7 @@ export default function Shell() {
         </Button>
       </Topbar>
       <AppContent id="app-content">
-        <div className="mx-auto w-full max-w-6xl">
+        <div className="w-full">
           <Outlet />
         </div>
       </AppContent>

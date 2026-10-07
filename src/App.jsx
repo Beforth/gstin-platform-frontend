@@ -56,7 +56,7 @@ export default function App() {
         <Route path="verify" element={<Verify />} />
         <Route path="keys" element={<Keys />} />
         <Route path="usage" element={<Usage />} />
-        <Route path="docs" element={<div className="max-w-4xl"><Docs /></div>} />
+        <Route path="docs" element={<Docs />} />
         <Route path="settings" element={<Settings />} />
         <Route path="team" element={<AdminOnly><Team /></AdminOnly>} />
         <Route path="*" element={<NotFound />} />

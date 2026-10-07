@@ -93,7 +93,7 @@ export default function Settings() {
   return (
     <>
       <PageHeader title="Settings" description="Your profile, password and sessions." />
-      <div className="grid max-w-3xl gap-5">
+      <div className="grid gap-5">
         <Card>
           <CardContent className="flex flex-wrap items-center gap-4 p-5">
             <Avatar name={user.name} size="lg" />

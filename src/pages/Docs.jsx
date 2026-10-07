@@ -184,7 +184,7 @@ export default function Docs() {
             <h1 className="text-xl font-semibold tracking-tight">GSTIN Verification API</h1>
             <Badge variant="info">v1</Badge>
           </div>
-          <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
+          <p className="mt-1 text-sm text-muted-foreground">
             Look up a taxpayer's registration details by GSTIN. JSON over HTTPS, authenticated with an API key you create under API keys.
           </p>
         </div>
