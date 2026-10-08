@@ -10,7 +10,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "set-backend": "node scripts/set-backend.mjs"
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.2.7",

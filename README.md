@@ -42,6 +42,30 @@ check compares `Origin` with `Host`, so a separate origin would break sign-in. T
    to the static files (with a fallback to `index.html` for client-side routes). **Preserve the Host header**
    (nginx: `proxy_set_header Host $host;`).
 
+### Deploy on Vercel
+
+`vercel.json` makes direct hits on `/login`, `/setup` and every other client route work (they fall back to `index.html`
+instead of 404) and **proxies the API paths** (`/api`, `/auth`, `/console`, `/v1`) to your backend. The proxy is what
+keeps sign-in working: the browser only ever talks to your Vercel domain, so the session cookie stays same-site.
+
+1. Give the backend a **stable HTTPS address** (a domain, or a named Cloudflare tunnel). A quick `trycloudflare.com`
+   address changes every run, and the address is written into `vercel.json`, so every change would need a redeploy.
+2. Point the config at it, commit, and import the repo in Vercel (the Vite preset is detected; no environment variables):
+   ```bash
+   npm run set-backend -- https://api.example.com
+   ```
+3. On the **backend**, trust this dashboard and the two proxies in front of it, then restart it:
+   ```
+   ALLOWED_ORIGINS=https://your-project.vercel.app      # exact origin; add a custom domain too, comma separated
+   TRUST_PROXY=2                                        # Vercel + Cloudflare. Use 1 if nothing else sits in between
+   ```
+4. Check: `https://your-project.vercel.app/api/health` returns JSON with `"db":"ok"`, then open `/login` directly and
+   refresh `/overview`.
+
+Not tested on a real Vercel deployment from here: the rewrite rules were checked against every route with
+`path-to-regexp`, and the backend side (trusted origin, two proxies, real client IP) has automated tests.
+Vercel **preview** deployments have different addresses, so sign in only on a domain listed in `ALLOWED_ORIGINS`.
+
 ### Docker
 
 The `Dockerfile` builds the app and serves it with [Caddy](https://caddyserver.com/), which also proxies `/api`, `/auth`,
