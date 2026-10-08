@@ -11,6 +11,7 @@ import Overview from "@/pages/Overview";
 import Settings from "@/pages/Settings";
 import Setup from "@/pages/Setup";
 import Team from "@/pages/Team";
+import Unreachable from "@/pages/Unreachable";
 import Usage from "@/pages/Usage";
 import Verify from "@/pages/Verify";
 
@@ -45,6 +46,7 @@ function AdminOnly({ children }) {
 export default function App() {
   const { status } = useAuth();
   if (status === "loading") return <Splash />;
+  if (status === "unreachable") return <Unreachable />;
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
